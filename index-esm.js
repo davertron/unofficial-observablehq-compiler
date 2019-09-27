@@ -5643,6 +5643,10 @@ function findReferences(cell, globals) {
 const SCOPE_ASYNC$1 = 4;
 const SCOPE_GENERATOR$1 = 8;
 
+function parseCell(input, {globals} = {}) {
+  return parseReferences(CellParser.parse(input), input, globals);
+}
+
 class CellParser extends Parser.extend(acornBigint, dynamicImport) {
   enterScope(flags) {
     if (flags & SCOPE_FUNCTION$1) ++this.O_function;
@@ -8627,13 +8631,15 @@ const defaultResolver = async path => {
 
 class Compiler {
   constructor(resolve = defaultResolver) {
-    this.resolve = resolve;
+      this.resolve = resolve;
   }
   cell(text) {
-    throw Errror(`compile.cell not implemented yet`);
+      const parsedCell = parseCell(text);
+      parsedCell.input = text;
+      return createRegularCellDefintion(parsedCell);
   }
   module(text) {
-    const m1 = parseModule(text);
-    return createModuleDefintion(m1, this.resolve);
+      const m1 = parseModule(text);
+      return createModuleDefintion(m1, this.resolve);
   }
 }export{Compiler};

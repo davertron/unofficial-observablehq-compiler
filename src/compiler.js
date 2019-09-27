@@ -118,13 +118,15 @@ const defaultResolver = async path => {
 
 export class Compiler {
   constructor(resolve = defaultResolver) {
-    this.resolve = resolve;
+      this.resolve = resolve;
   }
   cell(text) {
-    throw Errror(`compile.cell not implemented yet`);
+      const parsedCell = parseCell(text);
+      parsedCell.input = text;
+      return createRegularCellDefintion(parsedCell);
   }
   module(text) {
-    const m1 = parseModule(text);
-    return createModuleDefintion(m1, this.resolve);
+      const m1 = parseModule(text);
+      return createModuleDefintion(m1, this.resolve);
   }
 }
