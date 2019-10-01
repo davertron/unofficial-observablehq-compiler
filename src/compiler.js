@@ -110,10 +110,12 @@ const createModuleDefintion = (m, resolveModule) => {
 };
 
 const defaultResolver = async path => {
-  const source = extractPath(path);
-  return import(`https://api.observablehq.com/${source}.js?v=3`).then(
-    m => m.default
-  );
+  // This causes issues for some reason when importing this with Webpack.
+  // Since I'm not using the "module" method below I've commented this out
+  // but be aware that that method will no longer function...
+  //return import(`https://api.observablehq.com/${path}.js?v=3`).then(
+  //  m => m.default
+  //);
 };
 
 export class Compiler {
