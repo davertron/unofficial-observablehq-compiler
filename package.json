@@ -1,12 +1,12 @@
 {
-  "name": "@alex.garcia/unofficial-observablehq-compiler",
+  "name": "davertron/unofficial-observablehq-compiler",
   "version": "0.1.0",
   "description": "An unofficial compiler to bind @observablehq/parser and @observablehq/runtime",
   "main": "index.js",
   "author": "Alex Garcia <alexsebastian.garcia@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/asg017/unofficial-observablehq-compiler.git"
+    "url": "https://github.com/davertron/unofficial-observablehq-compiler.git"
   },
   "license": "ISC",
   "publishConfig": {
