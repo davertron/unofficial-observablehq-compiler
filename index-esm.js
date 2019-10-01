@@ -8501,21 +8501,7 @@ function variable_reachable(variable) {
 
 function window_global(name) {
   return window[name];
-}const extractPath = path => {
-  let source = path;
-  let m;
-
-  // "https://api.observablehq.com/@jashkenas/inputs.js?v=3" => strip off ".js"
-  if ((m = /\.js(\?|$)/i.exec(source))) source = source.slice(0, m.index);
-
-  // "74f872c4fde62e35" => "d/..."
-  if ((m = /^[0-9a-f]{16}$/i.test(source))) source = `d/${source}`;
-
-  // link of notebook
-  if ((m = /^https:\/\/(api\.|beta\.|)observablehq\.com\//i.exec(source)))
-    source = source.slice(m[0].length);
-  return source;
-};const { Generators: Generators$1 } = new Library();
+}const { Generators: Generators$1 } = new Library();
 
 const AsyncFunction = Object.getPrototypeOf(async function() {}).constructor;
 const GeneratorFunction = Object.getPrototypeOf(function*() {}).constructor;
@@ -8623,10 +8609,12 @@ const createModuleDefintion = (m, resolveModule) => {
 };
 
 const defaultResolver = async path => {
-  const source = extractPath(path);
-  return import(`https://api.observablehq.com/${source}.js?v=3`).then(
-    m => m.default
-  );
+  // This causes issues for some reason when importing this with Webpack.
+  // Since I'm not using the "module" method below I've commented this out
+  // but be aware that that method will no longer function...
+  //return import(`https://api.observablehq.com/${path}.js?v=3`).then(
+  //  m => m.default
+  //);
 };
 
 class Compiler {
