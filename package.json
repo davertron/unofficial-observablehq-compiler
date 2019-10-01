@@ -1,5 +1,5 @@
 {
-  "name": "davertron/unofficial-observablehq-compiler",
+  "name": "unofficial-observablehq-compiler",
   "version": "0.1.0",
   "description": "An unofficial compiler to bind @observablehq/parser and @observablehq/runtime",
   "main": "index.js",
