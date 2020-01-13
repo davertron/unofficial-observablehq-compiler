@@ -110,12 +110,9 @@ const createModuleDefintion = (m, resolveModule) => {
 };
 
 const defaultResolver = async path => {
-  // This causes issues for some reason when importing this with Webpack.
-  // Since I'm not using the "module" method below I've commented this out
-  // but be aware that that method will no longer function...
-  //return import(`https://api.observablehq.com/${path}.js?v=3`).then(
-  //  m => m.default
-  //);
+  return import(/* webpackIgnore: true */`https://api.observablehq.com/${path}.js?v=3`).then(
+    m => m.default
+  );
 };
 
 export class Compiler {
@@ -125,7 +122,11 @@ export class Compiler {
   cell(text) {
       const parsedCell = parseCell(text);
       parsedCell.input = text;
-      return createRegularCellDefintion(parsedCell);
+      if (/^import/.test(text)) {
+        return createImportCellDefintion(parsedCell, this.resolve);
+      } else {
+          return createRegularCellDefintion(parsedCell);
+      }
   }
   module(text) {
       const m1 = parseModule(text);
