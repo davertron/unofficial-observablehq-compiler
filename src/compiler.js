@@ -122,7 +122,11 @@ export class Compiler {
   cell(text) {
       const parsedCell = parseCell(text);
       parsedCell.input = text;
-      return createRegularCellDefintion(parsedCell);
+      if (/^import/.test(text)) {
+        return createImportCellDefintion(parsedCell, this.resolve);
+      } else {
+          return createRegularCellDefintion(parsedCell);
+      }
   }
   module(text) {
       const m1 = parseModule(text);
